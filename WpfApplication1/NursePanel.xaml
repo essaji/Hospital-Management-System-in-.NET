@@ -1,0 +1,78 @@
+﻿<Window x:Class="HMS.NursePanel" WindowState="Maximized"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HMS"
+        mc:Ignorable="d"
+        Title="NursePanel" MinHeight="580.5" Icon="images/icon.png" MinWidth="713.008" Closing="Window_Closing" Height="484.5">
+    <Grid>
+        <Grid  Width="{Binding ActualWidth, ElementName=main_grid}">
+            <DockPanel VerticalAlignment="Top">
+                <Menu DockPanel.Dock="Top">
+                    <MenuItem Header="_File">
+                        <MenuItem Name="menuLogout" Header="Logout" Click="menuLogout_Click" />
+                        <MenuItem Name="menuAbout"  Header="About" Click="menuAbout_Click" />
+                    </MenuItem>
+                </Menu>
+            </DockPanel>
+        </Grid>
+        <TabControl TabStripPlacement="Bottom" Background="{x:Null}" Margin="0,23,0,0">
+            <TabItem Header="My Rooms" Width="100" Height="30" Background="#FF2CAED4">
+                <Grid>
+                    <Grid>
+                        <Grid.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF2CAED4" Offset="1"/>
+                                <GradientStop Color="White"/>
+                            </LinearGradientBrush>
+                        </Grid.Background>
+                        <TextBox x:Name="txtSearch_Room" HorizontalAlignment="Center" Height="24" Margin="440,400,182,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="138" TextChanged="txtSearch_Room_TextChanged"/>
+                        <Label x:Name="label4" Content="Search Record By" HorizontalAlignment="Center" Margin="158,398,490,0" VerticalAlignment="Top" RenderTransformOrigin="0.842,-0.923" Width="112" FontWeight="Bold"/>
+                        <ComboBox SelectedValuePath="Content" x:Name="cboSearch_Rooms" HorizontalAlignment="Center" Margin="276,402,348,0" VerticalAlignment="Top" Width="136" >
+                            <ComboBoxItem Content="Room No"/>
+                            <ComboBoxItem Content="Total Beds"/>
+                            <ComboBoxItem Content="Available Beds"/>
+                        </ComboBox>
+                    </Grid>
+                    <DataGrid CanUserAddRows="False"  AutoGenerateColumns="False" x:Name="dataGrid_Rooms" HorizontalAlignment="Center" Margin="64,73,54,0" VerticalAlignment="Top" Height="301" Width="642">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Room No" Binding="{Binding rid}" />
+                            <DataGridTextColumn Header="Total Beds" Binding="{Binding totalbeds}" />
+                            <DataGridTextColumn Header="No of Patients" Binding="{Binding totalPatients}" />
+                            <DataGridTextColumn Header="Available Beds" Binding="{Binding availablebeds}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="My Patients" Width="100" Height="30" Background="#FFFFADAD">
+                <Grid>
+                    <Grid>
+                        <Grid.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFFFADAD" Offset="1"/>
+                                <GradientStop Color="White"/>
+                            </LinearGradientBrush>
+                        </Grid.Background>
+                        <TextBox x:Name="txtSearch_Patient" HorizontalAlignment="Center" Height="24" Margin="440,400,182,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="138" TextChanged="txtSearch_Patient_TextChanged"/>
+                        <Label x:Name="label4_Copy" Content="Search Record By" HorizontalAlignment="Center" Margin="158,398,490,0" VerticalAlignment="Top" RenderTransformOrigin="0.842,-0.923" Width="112" FontWeight="Bold"/>
+                        <ComboBox SelectedValuePath="Content" x:Name="cboSearch_Patient" HorizontalAlignment="Center" Margin="276,402,348,0" VerticalAlignment="Top" Width="136" >
+                            <ComboBoxItem Content="Name"/>
+                            <ComboBoxItem Content="Gender"/>
+                            <ComboBoxItem Content="Room No"/>
+                        </ComboBox>
+                    </Grid>
+                    <DataGrid CanUserAddRows="False"  AutoGenerateColumns="False" x:Name="dataGrid_Patients" HorizontalAlignment="Center" Margin="64,73,54,0" VerticalAlignment="Top" Height="301" Width="642">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Name" Binding="{Binding patient.name}" />
+                            <DataGridTextColumn Header="Gender" Binding="{Binding patient.gender}" />
+                            <DataGridTextColumn Header="Date of Brith" Binding="{Binding patient.dob}" />
+                            <DataGridTextColumn Header="Type" Binding="{Binding patient.type}" />
+                            <DataGridTextColumn Header="Room No" Binding="{Binding room.rid}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

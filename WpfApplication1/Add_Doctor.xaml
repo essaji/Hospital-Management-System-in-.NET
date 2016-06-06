@@ -1,0 +1,126 @@
+﻿<Window ResizeMode="NoResize"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HMS"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="HMS.Add_Doctor"
+        mc:Ignorable="d"
+        Title="Add Doctor" Height="326.951" Width="453.482" WindowStyle="None" MouseDown="Window_MouseDown" BorderThickness="1" BorderBrush="#FF292929">
+    <Window.Resources>
+        <BitmapImage x:Key="bitSaveImage" UriSource="images/save.png" />
+        <Image x:Key="saveImage" x:Shared="False"  Source="{StaticResource bitSaveImage}" />
+        <BitmapImage x:Key="bitCancelImage" UriSource="images/cancel.png" />
+        <Image x:Key="cancelImage" x:Shared="False"  Source="{StaticResource bitCancelImage}" />
+    </Window.Resources>
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FF86E09F" Offset="1"/>
+            <GradientStop Color="White"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Height="327" Margin="0,0,0,0" Width="449">
+        <TextBox x:Name="txtFirstName" ToolTip="{Binding RelativeSource={RelativeSource Self},Path=(Validation.Errors)[0].ErrorContent}"  HorizontalAlignment="Left" Height="23" Margin="100,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TabIndex="1" Background="White" FontFamily="Trebuchet MS" >
+ 
+            <TextBox.Text>
+                <Binding Path="Firstname"
+                         ValidatesOnDataErrors="True"
+                         UpdateSourceTrigger="PropertyChanged"
+                         NotifyOnValidationError="True">
+                    <Binding.ValidationRules>
+                        <ExceptionValidationRule />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBox x:Name="txtUsername" ToolTip="{Binding RelativeSource={RelativeSource Self},Path=(Validation.Errors)[0].ErrorContent}" HorizontalAlignment="Left" Height="23" Margin="323,48,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.507,-0.201" TabIndex="3" FontFamily="Trebuchet MS" >
+            <TextBox.Text>
+                <Binding Path="Username"
+                         ValidatesOnDataErrors="True"
+                         UpdateSourceTrigger="PropertyChanged"
+                         NotifyOnValidationError="True">
+                    <Binding.ValidationRules>
+                        <ExceptionValidationRule />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <Label x:Name="label" Content="First Name" HorizontalAlignment="Left" Margin="20,51,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.086,0.545" FontFamily="Trebuchet MS"/>
+        <Label x:Name="lblUsername" Content="Username" HorizontalAlignment="Left" Margin="245,45,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.401,0.256" FontFamily="Trebuchet MS"/>
+        <TextBox x:Name="txtLastName" ToolTip="{Binding RelativeSource={RelativeSource Self},Path=(Validation.Errors)[0].ErrorContent}" HorizontalAlignment="Left" Height="23" Margin="100,82,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TabIndex="2" FontFamily="Trebuchet MS" >
+            <TextBox.Text>
+                <Binding Path="Lastname"
+                         ValidatesOnDataErrors="True"
+                         UpdateSourceTrigger="PropertyChanged"
+                         NotifyOnValidationError="True">
+                    <Binding.ValidationRules>
+                        <ExceptionValidationRule />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <Label x:Name="label_Copy" Content="Last Name" HorizontalAlignment="Left" Margin="21,82,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.086,0.545" FontFamily="Trebuchet MS"/>
+        <TextBox x:Name="txtPassword" ToolTip="{Binding RelativeSource={RelativeSource Self},Path=(Validation.Errors)[0].ErrorContent}" HorizontalAlignment="Left" Height="23" Margin="324,79,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TabIndex="4" FontFamily="Trebuchet MS" >
+            <TextBox.Text>
+                <Binding Path="Password"
+                         ValidatesOnDataErrors="True"
+                         UpdateSourceTrigger="PropertyChanged"
+                         NotifyOnValidationError="True">
+                    <Binding.ValidationRules>
+                        <ExceptionValidationRule />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <Label x:Name="label_Copy1" Content="Password" HorizontalAlignment="Left" Margin="246,79,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.086,0.545" FontFamily="Trebuchet MS"/>
+        <Label x:Name="label_Copy3" Content="Salary" HorizontalAlignment="Left" Margin="277,154,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.086,0.545" FontFamily="Trebuchet MS"/>
+        <TextBox x:Name="txtPhone" ToolTip="{Binding RelativeSource={RelativeSource Self},Path=(Validation.Errors)[0].ErrorContent}" HorizontalAlignment="Left" Height="23" Margin="99,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TabIndex="10" FontFamily="Trebuchet MS" >
+            <TextBox.Text>
+                <Binding Path="Phone"
+                         ValidatesOnDataErrors="True"
+                         UpdateSourceTrigger="PropertyChanged"
+                         NotifyOnValidationError="True">
+                    <Binding.ValidationRules>
+                        <ExceptionValidationRule />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <Label x:Name="label_Copy4" Content="Phone" HorizontalAlignment="Left" Margin="49,154,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.086,0.545" FontFamily="Trebuchet MS"/>
+        <Label x:Name="label1_Copy" Content="Gender" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,202,0,0" FontFamily="Trebuchet MS"/>
+        <RadioButton GroupName="gender" x:Name="radioFemale" Content="Female" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="111,220,0,0" TabIndex="8" FontFamily="Trebuchet MS" />
+        <RadioButton IsChecked="True"  GroupName="gender"  x:Name="radioMale" Content="Male" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="111,200,0,0" TabIndex="7" FontFamily="Trebuchet MS" />
+        <Button x:Name="btnSave" Content="{StaticResource saveImage}" HorizontalAlignment="Left" Margin="338,240,0,0" VerticalAlignment="Top" Width="69" Click="button_Click" TabIndex="11" Height="59" FontFamily="Trebuchet MS" BorderBrush="{x:Null}" Background="{x:Null}"/>
+        <Button x:Name="btnCancel" Content="{StaticResource cancelImage}" HorizontalAlignment="Left" Margin="409,3,0,0" VerticalAlignment="Top" Width="34" Click="button1_Click" TabIndex="12" Height="27" FontFamily="Trebuchet MS" BorderBrush="{x:Null}" Background="{x:Null}"/>
+        <DatePicker x:Name="txtDob" ToolTip="{Binding RelativeSource={RelativeSource Self},Path=(Validation.Errors)[0].ErrorContent}" HorizontalAlignment="Left" Margin="100,125,0,0" VerticalAlignment="Top" Width="119" TabIndex="5" FontFamily="Trebuchet MS" />
+            <Label x:Name="label_Copy5" Content="Date of Birth" HorizontalAlignment="Left" Margin="12,125,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.086,0.545" FontFamily="Trebuchet MS"/>
+
+        <xctk:IntegerUpDown Name="txtSalary" ToolTip="{Binding RelativeSource={RelativeSource Self},Path=(Validation.Errors)[0].ErrorContent}"  HorizontalAlignment="Left" Margin="324,154,0,0" VerticalAlignment="Top" Width="119" Height="26" TabIndex="9" FontFamily="Trebuchet MS" >
+            <xctk:IntegerUpDown.Text>
+                <Binding Path="Salary"
+                         ValidatesOnDataErrors="True"
+                         UpdateSourceTrigger="PropertyChanged"
+                         NotifyOnValidationError="True">
+                    <Binding.ValidationRules>
+                        <ExceptionValidationRule />
+                    </Binding.ValidationRules>
+                </Binding>
+            </xctk:IntegerUpDown.Text>
+        </xctk:IntegerUpDown>
+        <ComboBox DisplayMemberPath="name" ToolTip="{Binding RelativeSource={RelativeSource Self},Path=(Validation.Errors)[0].ErrorContent}" SelectedValuePath="catid" x:Name="cboSpecialization" HorizontalAlignment="Left" Margin="322,125,0,0" VerticalAlignment="Top" Width="120" FontFamily="Trebuchet MS" >
+            <ComboBox.Text>
+                <Binding Path="Category"
+                         ValidatesOnDataErrors="True"
+                         UpdateSourceTrigger="PropertyChanged"
+                         NotifyOnValidationError="True">
+                    <Binding.ValidationRules>
+                        <ExceptionValidationRule />
+                    </Binding.ValidationRules>
+                </Binding>
+            </ComboBox.Text>
+        </ComboBox>
+
+        <Label x:Name="label_Copy7" Content="Specialization" HorizontalAlignment="Left" Margin="236,121,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.086,0.545" FontFamily="Trebuchet MS"/>
+
+    </Grid>
+</Window>

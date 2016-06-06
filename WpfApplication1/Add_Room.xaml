@@ -1,0 +1,54 @@
+﻿<Window WindowStyle="None" ResizeMode="NoResize"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HMS"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="HMS.Add_Room"
+        mc:Ignorable="d"
+        Title="Add Room" Height="183.284" Width="310.15" BorderBrush="#FF363636" BorderThickness="1" MouseDown="Window_MouseDown">
+    <Window.Resources>
+        <BitmapImage x:Key="bitSaveImage" UriSource="images/save.png" />
+        <Image x:Key="saveImage" x:Shared="False"  Source="{StaticResource bitSaveImage}" />
+        <BitmapImage x:Key="bitCancelImage" UriSource="images/cancel.png" />
+        <Image x:Key="cancelImage" x:Shared="False"  Source="{StaticResource bitCancelImage}" />
+    </Window.Resources>
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FFF2FF9D" Offset="1"/>
+            <GradientStop Color="White"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    <Grid>
+
+        <xctk:IntegerUpDown Name="txtTotalBeds" ToolTip="{Binding RelativeSource={RelativeSource Self},Path=(Validation.Errors)[0].ErrorContent}" HorizontalAlignment="Left" Margin="145,43,0,0" VerticalAlignment="Top" Width="120" Height="26" RenderTransformOrigin="0.515,0.383" >
+            <xctk:IntegerUpDown.Text>
+                <Binding Path="NoOfBeds"
+                         ValidatesOnDataErrors="True"
+                         UpdateSourceTrigger="PropertyChanged"
+                         NotifyOnValidationError="True">
+                    <Binding.ValidationRules>
+                        <ExceptionValidationRule />
+                    </Binding.ValidationRules>
+                </Binding>
+            </xctk:IntegerUpDown.Text>
+        </xctk:IntegerUpDown>
+        <Label x:Name="label" Content="No. of Beds" HorizontalAlignment="Left" Margin="50,43,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.136,0.506"/>
+        <ComboBox SelectedValuePath="nid" ToolTip="{Binding RelativeSource={RelativeSource Self},Path=(Validation.Errors)[0].ErrorContent}" DisplayMemberPath="employee.firstname" x:Name="cboGovernedBy" HorizontalAlignment="Left" Margin="145,87,0,0" VerticalAlignment="Top" Width="120" Height="26" >
+            <ComboBox.Text>
+                <Binding Path="GovernedBy"
+                         ValidatesOnDataErrors="True"
+                         UpdateSourceTrigger="PropertyChanged"
+                         NotifyOnValidationError="True">
+                    <Binding.ValidationRules>
+                        <ExceptionValidationRule />
+                    </Binding.ValidationRules>
+                </Binding>
+            </ComboBox.Text>
+        </ComboBox>
+        <Label x:Name="label_Copy" Content="Governed By" HorizontalAlignment="Left" Margin="50,87,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.136,0.506"/>
+        <Button x:Name="btnSave" Content="{StaticResource saveImage}" HorizontalAlignment="Left" Margin="233,131,0,0" VerticalAlignment="Top" Width="43" Height="42" Click="btnSave_Click" Background="{x:Null}" BorderBrush="{x:Null}"/>
+        <Button x:Name="btnCancel" Content="{StaticResource cancelImage}" HorizontalAlignment="Left" Margin="283,3,0,0" VerticalAlignment="Top" Width="22" Height="23" Click="btnCancel_Click" Background="{x:Null}" BorderBrush="{x:Null}"/>
+
+    </Grid>
+</Window>

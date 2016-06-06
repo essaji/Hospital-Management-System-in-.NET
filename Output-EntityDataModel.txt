@@ -1,0 +1,3 @@
+﻿Generated model file: HMS_Model.edmx.
+Loading metadata from the database took 00:00:03.4247830.
+Generating the model took 00:00:04.7771165.

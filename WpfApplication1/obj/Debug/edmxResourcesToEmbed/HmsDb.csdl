@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="hms2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="doctor">
+    <Key>
+      <PropertyRef Name="did" />
+    </Key>
+    <Property Name="did" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="specialization" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="eid" Type="Int64" />
+    <NavigationProperty Name="employee" Relationship="Self.doctor_ibfk_1" FromRole="doctor" ToRole="employee" />
+    <NavigationProperty Name="patients" Relationship="hms2Model.patient_ibfk_2" FromRole="doctor" ToRole="patient" />
+  </EntityType>
+  <EntityType Name="employee">
+    <Key>
+      <PropertyRef Name="eid" />
+    </Key>
+    <Property Name="eid" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="firstname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="lastname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="salary" Type="Int32" />
+    <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="uid" Type="Int64" />
+    <NavigationProperty Name="doctors" Relationship="Self.doctor_ibfk_1" FromRole="employee" ToRole="doctor" />
+    <NavigationProperty Name="user" Relationship="Self.employee_ibfk_1" FromRole="employee" ToRole="users" />
+    <NavigationProperty Name="nurses" Relationship="Self.nurse_ibfk_1" FromRole="employee" ToRole="nurse" />
+  </EntityType>
+  <EntityType Name="indoor">
+    <Key>
+      <PropertyRef Name="ipid" />
+    </Key>
+    <Property Name="ipid" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="disease" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="rid" Type="Int64" />
+    <Property Name="pid" Type="Int64" />
+    <NavigationProperty Name="room" Relationship="Self.indoor_ibfk_1" FromRole="indoor" ToRole="room" />
+    <NavigationProperty Name="patient" Relationship="Self.indoor_ibfk_2" FromRole="indoor" ToRole="patient" />
+  </EntityType>
+  <EntityType Name="medicine">
+    <Key>
+      <PropertyRef Name="mid" />
+    </Key>
+    <Property Name="mid" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="price" Type="Int32" />
+    <NavigationProperty Name="prescriptions" Relationship="Self.prescription_ibfk_1" FromRole="medicine" ToRole="prescription" />
+  </EntityType>
+  <EntityType Name="nurse">
+    <Key>
+      <PropertyRef Name="nid" />
+    </Key>
+    <Property Name="nid" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="experience" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="eid" Type="Int64" />
+    <NavigationProperty Name="employee" Relationship="Self.nurse_ibfk_1" FromRole="nurse" ToRole="employee" />
+    <NavigationProperty Name="rooms" Relationship="Self.room_ibfk_1" FromRole="nurse" ToRole="room" />
+  </EntityType>
+  <EntityType Name="patient">
+    <Key>
+      <PropertyRef Name="pid" />
+    </Key>
+    <Property Name="pid" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="dob" Type="DateTime" />
+    <Property Name="type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="uid" Type="Int64" />
+    <NavigationProperty Name="indoors" Relationship="Self.indoor_ibfk_2" FromRole="patient" ToRole="indoor" />
+    <NavigationProperty Name="user" Relationship="Self.patient_ibfk_1" FromRole="patient" ToRole="users" />
+    <Property Name="did" Type="Int64" />
+    <NavigationProperty Name="doctor" Relationship="hms2Model.patient_ibfk_2" FromRole="patient" ToRole="doctor" />
+  </EntityType>
+  <EntityType Name="prescription">
+    <Key>
+      <PropertyRef Name="prid" />
+    </Key>
+    <Property Name="prid" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="dosage" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+    <Property Name="mid" Type="Int64" />
+    <NavigationProperty Name="medicine" Relationship="Self.prescription_ibfk_1" FromRole="prescription" ToRole="medicine" />
+  </EntityType>
+  <EntityType Name="room">
+    <Key>
+      <PropertyRef Name="rid" />
+    </Key>
+    <Property Name="rid" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="totalbeds" Type="Int32" />
+    <Property Name="nid" Type="Int64" />
+    <NavigationProperty Name="indoors" Relationship="Self.indoor_ibfk_1" FromRole="room" ToRole="indoor" />
+    <NavigationProperty Name="nurse" Relationship="Self.room_ibfk_1" FromRole="room" ToRole="nurse" />
+  </EntityType>
+  <EntityType Name="user">
+    <Key>
+      <PropertyRef Name="uid" />
+    </Key>
+    <Property Name="uid" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="username" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="password" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="employees" Relationship="Self.employee_ibfk_1" FromRole="users" ToRole="employee" />
+    <NavigationProperty Name="patients" Relationship="Self.patient_ibfk_1" FromRole="users" ToRole="patient" />
+    <Property Name="type" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="doctor_ibfk_1">
+    <End Role="employee" Type="Self.employee" Multiplicity="0..1" />
+    <End Role="doctor" Type="Self.doctor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="employee">
+        <PropertyRef Name="eid" />
+      </Principal>
+      <Dependent Role="doctor">
+        <PropertyRef Name="eid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="employee_ibfk_1">
+    <End Role="users" Type="Self.user" Multiplicity="0..1" />
+    <End Role="employee" Type="Self.employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="uid" />
+      </Principal>
+      <Dependent Role="employee">
+        <PropertyRef Name="uid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="nurse_ibfk_1">
+    <End Role="employee" Type="Self.employee" Multiplicity="0..1" />
+    <End Role="nurse" Type="Self.nurse" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="employee">
+        <PropertyRef Name="eid" />
+      </Principal>
+      <Dependent Role="nurse">
+        <PropertyRef Name="eid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="indoor_ibfk_1">
+    <End Role="room" Type="Self.room" Multiplicity="0..1" />
+    <End Role="indoor" Type="Self.indoor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="room">
+        <PropertyRef Name="rid" />
+      </Principal>
+      <Dependent Role="indoor">
+        <PropertyRef Name="rid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="indoor_ibfk_2">
+    <End Role="patient" Type="Self.patient" Multiplicity="0..1" />
+    <End Role="indoor" Type="Self.indoor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="patient">
+        <PropertyRef Name="pid" />
+      </Principal>
+      <Dependent Role="indoor">
+        <PropertyRef Name="pid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="prescription_ibfk_1">
+    <End Role="medicine" Type="Self.medicine" Multiplicity="0..1" />
+    <End Role="prescription" Type="Self.prescription" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="medicine">
+        <PropertyRef Name="mid" />
+      </Principal>
+      <Dependent Role="prescription">
+        <PropertyRef Name="mid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="room_ibfk_1">
+    <End Role="nurse" Type="Self.nurse" Multiplicity="0..1" />
+    <End Role="room" Type="Self.room" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="nurse">
+        <PropertyRef Name="nid" />
+      </Principal>
+      <Dependent Role="room">
+        <PropertyRef Name="nid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="patient_ibfk_1">
+    <End Role="users" Type="Self.user" Multiplicity="0..1" />
+    <End Role="patient" Type="Self.patient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="uid" />
+      </Principal>
+      <Dependent Role="patient">
+        <PropertyRef Name="uid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="hms2Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="doctors" EntityType="Self.doctor" />
+    <EntitySet Name="employees" EntityType="Self.employee" />
+    <EntitySet Name="indoors" EntityType="Self.indoor" />
+    <EntitySet Name="medicines" EntityType="Self.medicine" />
+    <EntitySet Name="nurses" EntityType="Self.nurse" />
+    <EntitySet Name="patients" EntityType="Self.patient" />
+    <EntitySet Name="prescriptions" EntityType="Self.prescription" />
+    <EntitySet Name="rooms" EntityType="Self.room" />
+    <EntitySet Name="users" EntityType="Self.user" />
+    <AssociationSet Name="doctor_ibfk_1" Association="Self.doctor_ibfk_1">
+      <End Role="employee" EntitySet="employees" />
+      <End Role="doctor" EntitySet="doctors" />
+    </AssociationSet>
+    <AssociationSet Name="employee_ibfk_1" Association="Self.employee_ibfk_1">
+      <End Role="users" EntitySet="users" />
+      <End Role="employee" EntitySet="employees" />
+    </AssociationSet>
+    <AssociationSet Name="nurse_ibfk_1" Association="Self.nurse_ibfk_1">
+      <End Role="employee" EntitySet="employees" />
+      <End Role="nurse" EntitySet="nurses" />
+    </AssociationSet>
+    <AssociationSet Name="indoor_ibfk_1" Association="Self.indoor_ibfk_1">
+      <End Role="room" EntitySet="rooms" />
+      <End Role="indoor" EntitySet="indoors" />
+    </AssociationSet>
+    <AssociationSet Name="indoor_ibfk_2" Association="Self.indoor_ibfk_2">
+      <End Role="patient" EntitySet="patients" />
+      <End Role="indoor" EntitySet="indoors" />
+    </AssociationSet>
+    <AssociationSet Name="prescription_ibfk_1" Association="Self.prescription_ibfk_1">
+      <End Role="medicine" EntitySet="medicines" />
+      <End Role="prescription" EntitySet="prescriptions" />
+    </AssociationSet>
+    <AssociationSet Name="room_ibfk_1" Association="Self.room_ibfk_1">
+      <End Role="nurse" EntitySet="nurses" />
+      <End Role="room" EntitySet="rooms" />
+    </AssociationSet>
+    <AssociationSet Name="patient_ibfk_1" Association="Self.patient_ibfk_1">
+      <End Role="users" EntitySet="users" />
+      <End Role="patient" EntitySet="patients" />
+    </AssociationSet>
+    <AssociationSet Name="patient_ibfk_2" Association="hms2Model.patient_ibfk_2">
+      <End Role="doctor" EntitySet="doctors" />
+      <End Role="patient" EntitySet="patients" />
+    </AssociationSet>
+  </EntityContainer>
+  <Association Name="patient_ibfk_2">
+    <End Type="hms2Model.doctor" Role="doctor" Multiplicity="0..1" />
+    <End Type="hms2Model.patient" Role="patient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="doctor">
+        <PropertyRef Name="did" />
+      </Principal>
+      <Dependent Role="patient">
+        <PropertyRef Name="did" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

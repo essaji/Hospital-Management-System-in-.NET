@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="HMSStoreContainer" CdmEntityContainer="hmsEntities">
+    <EntitySetMapping Name="categories">
+      <EntityTypeMapping TypeName="HMS.category">
+        <MappingFragment StoreEntitySet="category">
+          <ScalarProperty Name="catid" ColumnName="catid" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="doctors">
+      <EntityTypeMapping TypeName="HMS.doctor">
+        <MappingFragment StoreEntitySet="doctor">
+          <ScalarProperty Name="did" ColumnName="did" />
+          <ScalarProperty Name="catid" ColumnName="catid" />
+          <ScalarProperty Name="eid" ColumnName="eid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="employees">
+      <EntityTypeMapping TypeName="HMS.employee">
+        <MappingFragment StoreEntitySet="employee">
+          <ScalarProperty Name="eid" ColumnName="eid" />
+          <ScalarProperty Name="firstname" ColumnName="firstname" />
+          <ScalarProperty Name="lastname" ColumnName="lastname" />
+          <ScalarProperty Name="dob" ColumnName="dob" />
+          <ScalarProperty Name="salary" ColumnName="salary" />
+          <ScalarProperty Name="gender" ColumnName="gender" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="uid" ColumnName="uid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="indoors">
+      <EntityTypeMapping TypeName="HMS.indoor">
+        <MappingFragment StoreEntitySet="indoor">
+          <ScalarProperty Name="ipid" ColumnName="ipid" />
+          <ScalarProperty Name="disease" ColumnName="disease" />
+          <ScalarProperty Name="rid" ColumnName="rid" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="pid" ColumnName="pid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="medicines">
+      <EntityTypeMapping TypeName="HMS.medicine">
+        <MappingFragment StoreEntitySet="medicine">
+          <ScalarProperty Name="mid" ColumnName="mid" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="price" ColumnName="price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="nurses">
+      <EntityTypeMapping TypeName="HMS.nurse">
+        <MappingFragment StoreEntitySet="nurse">
+          <ScalarProperty Name="nid" ColumnName="nid" />
+          <ScalarProperty Name="experience" ColumnName="experience" />
+          <ScalarProperty Name="eid" ColumnName="eid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="patients">
+      <EntityTypeMapping TypeName="HMS.patient">
+        <MappingFragment StoreEntitySet="patient">
+          <ScalarProperty Name="pid" ColumnName="pid" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="gender" ColumnName="gender" />
+          <ScalarProperty Name="dob" ColumnName="dob" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="catid" ColumnName="catid" />
+          <ScalarProperty Name="did" ColumnName="did" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="prescriptions">
+      <EntityTypeMapping TypeName="HMS.prescription">
+        <MappingFragment StoreEntitySet="prescription">
+          <ScalarProperty Name="prid" ColumnName="prid" />
+          <ScalarProperty Name="dosage" ColumnName="dosage" />
+          <ScalarProperty Name="mid" ColumnName="mid" />
+          <ScalarProperty Name="pid" ColumnName="pid" />
+          <ScalarProperty Name="did" ColumnName="did" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="rooms">
+      <EntityTypeMapping TypeName="HMS.room">
+        <MappingFragment StoreEntitySet="room">
+          <ScalarProperty Name="rid" ColumnName="rid" />
+          <ScalarProperty Name="totalbeds" ColumnName="totalbeds" />
+          <ScalarProperty Name="nid" ColumnName="nid" />
+          <ScalarProperty Name="availablebeds" ColumnName="availablebeds" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="users">
+      <EntityTypeMapping TypeName="HMS.user">
+        <MappingFragment StoreEntitySet="users">
+          <ScalarProperty Name="uid" ColumnName="uid" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="type" ColumnName="type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

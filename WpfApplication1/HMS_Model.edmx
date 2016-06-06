@@ -1,0 +1,786 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="HMS.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="catid" />
+          </Key>
+          <Property Name="catid" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="doctor">
+          <Key>
+            <PropertyRef Name="did" />
+          </Key>
+          <Property Name="did" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="catid" Type="bigint" />
+          <Property Name="eid" Type="bigint" />
+        </EntityType>
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="eid" />
+          </Key>
+          <Property Name="eid" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="firstname" Type="varchar" MaxLength="20" />
+          <Property Name="lastname" Type="varchar" MaxLength="20" />
+          <Property Name="dob" Type="date" />
+          <Property Name="salary" Type="int" />
+          <Property Name="gender" Type="varchar" MaxLength="10" />
+          <Property Name="phone" Type="varchar" MaxLength="20" />
+          <Property Name="uid" Type="bigint" />
+        </EntityType>
+        <EntityType Name="indoor">
+          <Key>
+            <PropertyRef Name="ipid" />
+          </Key>
+          <Property Name="ipid" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="disease" Type="varchar" MaxLength="30" />
+          <Property Name="rid" Type="bigint" />
+          <Property Name="status" Type="varchar" MaxLength="20" />
+          <Property Name="pid" Type="bigint" />
+        </EntityType>
+        <EntityType Name="medicine">
+          <Key>
+            <PropertyRef Name="mid" />
+          </Key>
+          <Property Name="mid" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="30" />
+          <Property Name="price" Type="int" />
+        </EntityType>
+        <EntityType Name="nurse">
+          <Key>
+            <PropertyRef Name="nid" />
+          </Key>
+          <Property Name="nid" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="experience" Type="varchar" MaxLength="30" />
+          <Property Name="eid" Type="bigint" />
+        </EntityType>
+        <EntityType Name="patient">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="30" />
+          <Property Name="gender" Type="varchar" MaxLength="10" />
+          <Property Name="dob" Type="date" />
+          <Property Name="type" Type="varchar" MaxLength="10" />
+          <Property Name="catid" Type="bigint" />
+          <Property Name="did" Type="bigint" />
+        </EntityType>
+        <EntityType Name="prescription">
+          <Key>
+            <PropertyRef Name="prid" />
+          </Key>
+          <Property Name="prid" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dosage" Type="varchar" MaxLength="35" />
+          <Property Name="mid" Type="bigint" />
+          <Property Name="pid" Type="bigint" />
+          <Property Name="did" Type="bigint" />
+        </EntityType>
+        <EntityType Name="room">
+          <Key>
+            <PropertyRef Name="rid" />
+          </Key>
+          <Property Name="rid" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="totalbeds" Type="int" />
+          <Property Name="nid" Type="bigint" />
+          <Property Name="availablebeds" Type="bigint" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="uid" />
+          </Key>
+          <Property Name="uid" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="30" />
+          <Property Name="password" Type="varchar" MaxLength="30" />
+          <Property Name="type" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <Association Name="doctor_ibfk_1">
+          <End Role="employee" Type="Self.employee" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="doctor" Type="Self.doctor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="eid" />
+            </Principal>
+            <Dependent Role="doctor">
+              <PropertyRef Name="eid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="doctor_ibfk_2">
+          <End Role="category" Type="Self.category" Multiplicity="0..1" />
+          <End Role="doctor" Type="Self.doctor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="catid" />
+            </Principal>
+            <Dependent Role="doctor">
+              <PropertyRef Name="catid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="employee_ibfk_1">
+          <End Role="users" Type="Self.users" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="employee" Type="Self.employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="uid" />
+            </Principal>
+            <Dependent Role="employee">
+              <PropertyRef Name="uid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="indoor_ibfk_1">
+          <End Role="room" Type="Self.room" Multiplicity="0..1" />
+          <End Role="indoor" Type="Self.indoor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="room">
+              <PropertyRef Name="rid" />
+            </Principal>
+            <Dependent Role="indoor">
+              <PropertyRef Name="rid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="indoor_ibfk_2">
+          <End Role="patient" Type="Self.patient" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="indoor" Type="Self.indoor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="patient">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="indoor">
+              <PropertyRef Name="pid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="nurse_ibfk_1">
+          <End Role="employee" Type="Self.employee" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="nurse" Type="Self.nurse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="eid" />
+            </Principal>
+            <Dependent Role="nurse">
+              <PropertyRef Name="eid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="patient_ibfk_1">
+          <End Role="doctor" Type="Self.doctor" Multiplicity="0..1" />
+          <End Role="patient" Type="Self.patient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="doctor">
+              <PropertyRef Name="did" />
+            </Principal>
+            <Dependent Role="patient">
+              <PropertyRef Name="did" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="patient_ibfk_2">
+          <End Role="category" Type="Self.category" Multiplicity="0..1" />
+          <End Role="patient" Type="Self.patient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="catid" />
+            </Principal>
+            <Dependent Role="patient">
+              <PropertyRef Name="catid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="prescription_ibfk_1">
+          <End Role="medicine" Type="Self.medicine" Multiplicity="0..1" />
+          <End Role="prescription" Type="Self.prescription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medicine">
+              <PropertyRef Name="mid" />
+            </Principal>
+            <Dependent Role="prescription">
+              <PropertyRef Name="mid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="prescription_ibfk_2">
+          <End Role="patient" Type="Self.patient" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="prescription" Type="Self.prescription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="patient">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="prescription">
+              <PropertyRef Name="pid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="prescription_ibfk_3">
+          <End Role="doctor" Type="Self.doctor" Multiplicity="0..1" />
+          <End Role="prescription" Type="Self.prescription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="doctor">
+              <PropertyRef Name="did" />
+            </Principal>
+            <Dependent Role="prescription">
+              <PropertyRef Name="did" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="room_ibfk_1">
+          <End Role="nurse" Type="Self.nurse" Multiplicity="0..1" />
+          <End Role="room" Type="Self.room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="nurse">
+              <PropertyRef Name="nid" />
+            </Principal>
+            <Dependent Role="room">
+              <PropertyRef Name="nid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HMSStoreContainer">
+          <EntitySet Name="category" EntityType="Self.category" Schema="hms2" store:Type="Tables" />
+          <EntitySet Name="doctor" EntityType="Self.doctor" Schema="hms2" store:Type="Tables" />
+          <EntitySet Name="employee" EntityType="Self.employee" Schema="hms2" store:Type="Tables" />
+          <EntitySet Name="indoor" EntityType="Self.indoor" Schema="hms2" store:Type="Tables" />
+          <EntitySet Name="medicine" EntityType="Self.medicine" Schema="hms2" store:Type="Tables" />
+          <EntitySet Name="nurse" EntityType="Self.nurse" Schema="hms2" store:Type="Tables" />
+          <EntitySet Name="patient" EntityType="Self.patient" Schema="hms2" store:Type="Tables" />
+          <EntitySet Name="prescription" EntityType="Self.prescription" Schema="hms2" store:Type="Tables" />
+          <EntitySet Name="room" EntityType="Self.room" Schema="hms2" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="hms2" store:Type="Tables" />
+          <AssociationSet Name="doctor_ibfk_1" Association="Self.doctor_ibfk_1">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="doctor" EntitySet="doctor" />
+          </AssociationSet>
+          <AssociationSet Name="doctor_ibfk_2" Association="Self.doctor_ibfk_2">
+            <End Role="category" EntitySet="category" />
+            <End Role="doctor" EntitySet="doctor" />
+          </AssociationSet>
+          <AssociationSet Name="employee_ibfk_1" Association="Self.employee_ibfk_1">
+            <End Role="users" EntitySet="users" />
+            <End Role="employee" EntitySet="employee" />
+          </AssociationSet>
+          <AssociationSet Name="indoor_ibfk_1" Association="Self.indoor_ibfk_1">
+            <End Role="room" EntitySet="room" />
+            <End Role="indoor" EntitySet="indoor" />
+          </AssociationSet>
+          <AssociationSet Name="indoor_ibfk_2" Association="Self.indoor_ibfk_2">
+            <End Role="patient" EntitySet="patient" />
+            <End Role="indoor" EntitySet="indoor" />
+          </AssociationSet>
+          <AssociationSet Name="nurse_ibfk_1" Association="Self.nurse_ibfk_1">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="nurse" EntitySet="nurse" />
+          </AssociationSet>
+          <AssociationSet Name="patient_ibfk_1" Association="Self.patient_ibfk_1">
+            <End Role="doctor" EntitySet="doctor" />
+            <End Role="patient" EntitySet="patient" />
+          </AssociationSet>
+          <AssociationSet Name="patient_ibfk_2" Association="Self.patient_ibfk_2">
+            <End Role="category" EntitySet="category" />
+            <End Role="patient" EntitySet="patient" />
+          </AssociationSet>
+          <AssociationSet Name="prescription_ibfk_1" Association="Self.prescription_ibfk_1">
+            <End Role="medicine" EntitySet="medicine" />
+            <End Role="prescription" EntitySet="prescription" />
+          </AssociationSet>
+          <AssociationSet Name="prescription_ibfk_2" Association="Self.prescription_ibfk_2">
+            <End Role="patient" EntitySet="patient" />
+            <End Role="prescription" EntitySet="prescription" />
+          </AssociationSet>
+          <AssociationSet Name="prescription_ibfk_3" Association="Self.prescription_ibfk_3">
+            <End Role="doctor" EntitySet="doctor" />
+            <End Role="prescription" EntitySet="prescription" />
+          </AssociationSet>
+          <AssociationSet Name="room_ibfk_1" Association="Self.room_ibfk_1">
+            <End Role="nurse" EntitySet="nurse" />
+            <End Role="room" EntitySet="room" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HMS" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="catid" />
+          </Key>
+          <Property Name="catid" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="doctors" Relationship="Self.doctor_ibfk_2" FromRole="category" ToRole="doctor" />
+          <NavigationProperty Name="patients" Relationship="Self.patient_ibfk_2" FromRole="category" ToRole="patient" />
+        </EntityType>
+        <EntityType Name="doctor">
+          <Key>
+            <PropertyRef Name="did" />
+          </Key>
+          <Property Name="did" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="catid" Type="Int64" />
+          <Property Name="eid" Type="Int64" />
+          <NavigationProperty Name="category" Relationship="Self.doctor_ibfk_2" FromRole="doctor" ToRole="category" />
+          <NavigationProperty Name="employee" Relationship="Self.doctor_ibfk_1" FromRole="doctor" ToRole="employee" />
+          <NavigationProperty Name="patients" Relationship="Self.patient_ibfk_1" FromRole="doctor" ToRole="patient" />
+          <NavigationProperty Name="prescriptions" Relationship="Self.prescription_ibfk_3" FromRole="doctor" ToRole="prescription" />
+        </EntityType>
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="eid" />
+          </Key>
+          <Property Name="eid" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="firstname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="lastname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="dob" Type="DateTime" />
+          <Property Name="salary" Type="Int32" />
+          <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="uid" Type="Int64" />
+          <NavigationProperty Name="doctors" Relationship="Self.doctor_ibfk_1" FromRole="employee" ToRole="doctor" />
+          <NavigationProperty Name="user" Relationship="Self.employee_ibfk_1" FromRole="employee" ToRole="users" />
+          <NavigationProperty Name="nurses" Relationship="Self.nurse_ibfk_1" FromRole="employee" ToRole="nurse" />
+        </EntityType>
+        <EntityType Name="indoor">
+          <Key>
+            <PropertyRef Name="ipid" />
+          </Key>
+          <Property Name="ipid" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="disease" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="rid" Type="Int64" />
+          <Property Name="status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="pid" Type="Int64" />
+          <NavigationProperty Name="room" Relationship="Self.indoor_ibfk_1" FromRole="indoor" ToRole="room" />
+          <NavigationProperty Name="patient" Relationship="Self.indoor_ibfk_2" FromRole="indoor" ToRole="patient" />
+        </EntityType>
+        <EntityType Name="medicine">
+          <Key>
+            <PropertyRef Name="mid" />
+          </Key>
+          <Property Name="mid" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="price" Type="Int32" />
+          <NavigationProperty Name="prescriptions" Relationship="Self.prescription_ibfk_1" FromRole="medicine" ToRole="prescription" />
+        </EntityType>
+        <EntityType Name="nurse">
+          <Key>
+            <PropertyRef Name="nid" />
+          </Key>
+          <Property Name="nid" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="experience" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="eid" Type="Int64" />
+          <NavigationProperty Name="employee" Relationship="Self.nurse_ibfk_1" FromRole="nurse" ToRole="employee" />
+          <NavigationProperty Name="rooms" Relationship="Self.room_ibfk_1" FromRole="nurse" ToRole="room" />
+        </EntityType>
+        <EntityType Name="patient">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="dob" Type="DateTime" />
+          <Property Name="type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="catid" Type="Int64" />
+          <Property Name="did" Type="Int64" />
+          <NavigationProperty Name="category" Relationship="Self.patient_ibfk_2" FromRole="patient" ToRole="category" />
+          <NavigationProperty Name="doctor" Relationship="Self.patient_ibfk_1" FromRole="patient" ToRole="doctor" />
+          <NavigationProperty Name="indoors" Relationship="Self.indoor_ibfk_2" FromRole="patient" ToRole="indoor" />
+          <NavigationProperty Name="prescriptions" Relationship="Self.prescription_ibfk_2" FromRole="patient" ToRole="prescription" />
+        </EntityType>
+        <EntityType Name="prescription">
+          <Key>
+            <PropertyRef Name="prid" />
+          </Key>
+          <Property Name="prid" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dosage" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="mid" Type="Int64" />
+          <Property Name="pid" Type="Int64" />
+          <Property Name="did" Type="Int64" />
+          <NavigationProperty Name="doctor" Relationship="Self.prescription_ibfk_3" FromRole="prescription" ToRole="doctor" />
+          <NavigationProperty Name="medicine" Relationship="Self.prescription_ibfk_1" FromRole="prescription" ToRole="medicine" />
+          <NavigationProperty Name="patient" Relationship="Self.prescription_ibfk_2" FromRole="prescription" ToRole="patient" />
+        </EntityType>
+        <EntityType Name="room">
+          <Key>
+            <PropertyRef Name="rid" />
+          </Key>
+          <Property Name="rid" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="totalbeds" Type="Int32" />
+          <Property Name="nid" Type="Int64" />
+          <Property Name="availablebeds" Type="Int64" />
+          <NavigationProperty Name="indoors" Relationship="Self.indoor_ibfk_1" FromRole="room" ToRole="indoor" />
+          <NavigationProperty Name="nurse" Relationship="Self.room_ibfk_1" FromRole="room" ToRole="nurse" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="uid" />
+          </Key>
+          <Property Name="uid" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="type" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="employees" Relationship="Self.employee_ibfk_1" FromRole="users" ToRole="employee" />
+        </EntityType>
+        <Association Name="doctor_ibfk_2">
+          <End Role="category" Type="Self.category" Multiplicity="0..1" />
+          <End Role="doctor" Type="Self.doctor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="catid" />
+            </Principal>
+            <Dependent Role="doctor">
+              <PropertyRef Name="catid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="patient_ibfk_2">
+          <End Role="category" Type="Self.category" Multiplicity="0..1" />
+          <End Role="patient" Type="Self.patient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="catid" />
+            </Principal>
+            <Dependent Role="patient">
+              <PropertyRef Name="catid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="doctor_ibfk_1">
+          <End Role="employee" Type="Self.employee" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="doctor" Type="Self.doctor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="eid" />
+            </Principal>
+            <Dependent Role="doctor">
+              <PropertyRef Name="eid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="patient_ibfk_1">
+          <End Role="doctor" Type="Self.doctor" Multiplicity="0..1" />
+          <End Role="patient" Type="Self.patient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="doctor">
+              <PropertyRef Name="did" />
+            </Principal>
+            <Dependent Role="patient">
+              <PropertyRef Name="did" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="prescription_ibfk_3">
+          <End Role="doctor" Type="Self.doctor" Multiplicity="0..1" />
+          <End Role="prescription" Type="Self.prescription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="doctor">
+              <PropertyRef Name="did" />
+            </Principal>
+            <Dependent Role="prescription">
+              <PropertyRef Name="did" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="employee_ibfk_1">
+          <End Role="users" Type="Self.user" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="employee" Type="Self.employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="uid" />
+            </Principal>
+            <Dependent Role="employee">
+              <PropertyRef Name="uid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="nurse_ibfk_1">
+          <End Role="employee" Type="Self.employee" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="nurse" Type="Self.nurse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="eid" />
+            </Principal>
+            <Dependent Role="nurse">
+              <PropertyRef Name="eid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="indoor_ibfk_1">
+          <End Role="room" Type="Self.room" Multiplicity="0..1" />
+          <End Role="indoor" Type="Self.indoor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="room">
+              <PropertyRef Name="rid" />
+            </Principal>
+            <Dependent Role="indoor">
+              <PropertyRef Name="rid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="indoor_ibfk_2">
+          <End Role="patient" Type="Self.patient" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="indoor" Type="Self.indoor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="patient">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="indoor">
+              <PropertyRef Name="pid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="prescription_ibfk_1">
+          <End Role="medicine" Type="Self.medicine" Multiplicity="0..1" />
+          <End Role="prescription" Type="Self.prescription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medicine">
+              <PropertyRef Name="mid" />
+            </Principal>
+            <Dependent Role="prescription">
+              <PropertyRef Name="mid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="room_ibfk_1">
+          <End Role="nurse" Type="Self.nurse" Multiplicity="0..1" />
+          <End Role="room" Type="Self.room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="nurse">
+              <PropertyRef Name="nid" />
+            </Principal>
+            <Dependent Role="room">
+              <PropertyRef Name="nid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="prescription_ibfk_2">
+          <End Role="patient" Type="Self.patient" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="prescription" Type="Self.prescription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="patient">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="prescription">
+              <PropertyRef Name="pid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="hmsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="categories" EntityType="Self.category" />
+          <EntitySet Name="doctors" EntityType="Self.doctor" />
+          <EntitySet Name="employees" EntityType="Self.employee" />
+          <EntitySet Name="indoors" EntityType="Self.indoor" />
+          <EntitySet Name="medicines" EntityType="Self.medicine" />
+          <EntitySet Name="nurses" EntityType="Self.nurse" />
+          <EntitySet Name="patients" EntityType="Self.patient" />
+          <EntitySet Name="prescriptions" EntityType="Self.prescription" />
+          <EntitySet Name="rooms" EntityType="Self.room" />
+          <EntitySet Name="users" EntityType="Self.user" />
+          <AssociationSet Name="doctor_ibfk_2" Association="Self.doctor_ibfk_2">
+            <End Role="category" EntitySet="categories" />
+            <End Role="doctor" EntitySet="doctors" />
+          </AssociationSet>
+          <AssociationSet Name="patient_ibfk_2" Association="Self.patient_ibfk_2">
+            <End Role="category" EntitySet="categories" />
+            <End Role="patient" EntitySet="patients" />
+          </AssociationSet>
+          <AssociationSet Name="doctor_ibfk_1" Association="Self.doctor_ibfk_1">
+            <End Role="employee" EntitySet="employees" />
+            <End Role="doctor" EntitySet="doctors" />
+          </AssociationSet>
+          <AssociationSet Name="patient_ibfk_1" Association="Self.patient_ibfk_1">
+            <End Role="doctor" EntitySet="doctors" />
+            <End Role="patient" EntitySet="patients" />
+          </AssociationSet>
+          <AssociationSet Name="prescription_ibfk_3" Association="Self.prescription_ibfk_3">
+            <End Role="doctor" EntitySet="doctors" />
+            <End Role="prescription" EntitySet="prescriptions" />
+          </AssociationSet>
+          <AssociationSet Name="employee_ibfk_1" Association="Self.employee_ibfk_1">
+            <End Role="users" EntitySet="users" />
+            <End Role="employee" EntitySet="employees" />
+          </AssociationSet>
+          <AssociationSet Name="nurse_ibfk_1" Association="Self.nurse_ibfk_1">
+            <End Role="employee" EntitySet="employees" />
+            <End Role="nurse" EntitySet="nurses" />
+          </AssociationSet>
+          <AssociationSet Name="indoor_ibfk_1" Association="Self.indoor_ibfk_1">
+            <End Role="room" EntitySet="rooms" />
+            <End Role="indoor" EntitySet="indoors" />
+          </AssociationSet>
+          <AssociationSet Name="indoor_ibfk_2" Association="Self.indoor_ibfk_2">
+            <End Role="patient" EntitySet="patients" />
+            <End Role="indoor" EntitySet="indoors" />
+          </AssociationSet>
+          <AssociationSet Name="prescription_ibfk_1" Association="Self.prescription_ibfk_1">
+            <End Role="medicine" EntitySet="medicines" />
+            <End Role="prescription" EntitySet="prescriptions" />
+          </AssociationSet>
+          <AssociationSet Name="room_ibfk_1" Association="Self.room_ibfk_1">
+            <End Role="nurse" EntitySet="nurses" />
+            <End Role="room" EntitySet="rooms" />
+          </AssociationSet>
+          <AssociationSet Name="prescription_ibfk_2" Association="Self.prescription_ibfk_2">
+            <End Role="patient" EntitySet="patients" />
+            <End Role="prescription" EntitySet="prescriptions" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HMSStoreContainer" CdmEntityContainer="hmsEntities">
+          <EntitySetMapping Name="categories">
+            <EntityTypeMapping TypeName="HMS.category">
+              <MappingFragment StoreEntitySet="category">
+                <ScalarProperty Name="catid" ColumnName="catid" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="doctors">
+            <EntityTypeMapping TypeName="HMS.doctor">
+              <MappingFragment StoreEntitySet="doctor">
+                <ScalarProperty Name="did" ColumnName="did" />
+                <ScalarProperty Name="catid" ColumnName="catid" />
+                <ScalarProperty Name="eid" ColumnName="eid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="employees">
+            <EntityTypeMapping TypeName="HMS.employee">
+              <MappingFragment StoreEntitySet="employee">
+                <ScalarProperty Name="eid" ColumnName="eid" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="dob" ColumnName="dob" />
+                <ScalarProperty Name="salary" ColumnName="salary" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="uid" ColumnName="uid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="indoors">
+            <EntityTypeMapping TypeName="HMS.indoor">
+              <MappingFragment StoreEntitySet="indoor">
+                <ScalarProperty Name="ipid" ColumnName="ipid" />
+                <ScalarProperty Name="disease" ColumnName="disease" />
+                <ScalarProperty Name="rid" ColumnName="rid" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="pid" ColumnName="pid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="medicines">
+            <EntityTypeMapping TypeName="HMS.medicine">
+              <MappingFragment StoreEntitySet="medicine">
+                <ScalarProperty Name="mid" ColumnName="mid" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="price" ColumnName="price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="nurses">
+            <EntityTypeMapping TypeName="HMS.nurse">
+              <MappingFragment StoreEntitySet="nurse">
+                <ScalarProperty Name="nid" ColumnName="nid" />
+                <ScalarProperty Name="experience" ColumnName="experience" />
+                <ScalarProperty Name="eid" ColumnName="eid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="patients">
+            <EntityTypeMapping TypeName="HMS.patient">
+              <MappingFragment StoreEntitySet="patient">
+                <ScalarProperty Name="pid" ColumnName="pid" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="dob" ColumnName="dob" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="catid" ColumnName="catid" />
+                <ScalarProperty Name="did" ColumnName="did" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="prescriptions">
+            <EntityTypeMapping TypeName="HMS.prescription">
+              <MappingFragment StoreEntitySet="prescription">
+                <ScalarProperty Name="prid" ColumnName="prid" />
+                <ScalarProperty Name="dosage" ColumnName="dosage" />
+                <ScalarProperty Name="mid" ColumnName="mid" />
+                <ScalarProperty Name="pid" ColumnName="pid" />
+                <ScalarProperty Name="did" ColumnName="did" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rooms">
+            <EntityTypeMapping TypeName="HMS.room">
+              <MappingFragment StoreEntitySet="room">
+                <ScalarProperty Name="rid" ColumnName="rid" />
+                <ScalarProperty Name="totalbeds" ColumnName="totalbeds" />
+                <ScalarProperty Name="nid" ColumnName="nid" />
+                <ScalarProperty Name="availablebeds" ColumnName="availablebeds" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="HMS.user">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="uid" ColumnName="uid" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="type" ColumnName="type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
